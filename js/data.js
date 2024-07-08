@@ -1,62 +1,34 @@
-import {getRandomInteger, getUniqueRandomInteger, getRandomArrayElement} from './get-random-numbers';
+import {getRandomInteger, getUniqueRandomInteger, getRandomArrayElement} from './utils';
+import {
+  MIN_POSTS_QUANTITY,
+  MAX_POSTS_QUANTITY,
+  MIN_COMMENTATORS_QUANTITY,
+  MAX_COMMENTATORS_QUANTITY,
+  MIN_LIKES,
+  MAX_LIKES,
+  MIN_COMMENT_QUANTITY,
+  MAX_COMMENT_QUANTITY,
+  MIN_COMMENT_ID_QUANTITY,
+  MAX_COMMENT_ID_QUANTITY,
+  PHOTOS_DESCRIPTIONS,
+  COMMENT_MESSAGES,
+  NAMES
+} from './constants';
 
-const POSTS_QUANTITY = 25;
-const COMMENTATORS_QUANTITY = 6;
-const MIN_LIKES = 15;
-const MAX_LIKES = 200;
-const MAX_COMMENT_QUANTITY = 30;
-const MAX_COMMENT_ID_QUANTITY = 20000;
-
-const PHOTOS_DESCRIPTIONS = ['Чудесно провели время!',
-  'Незабываемый день!',
-  'Обязательно встретимся снова)',
-  'Море впечатлений~~~',
-  'Жизнь прекрасна!',
-  'Отлично отдохнули',
-  'Ищем красоту везде!'];
-
-const COMMENT_MESSAGES = ['Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.', 'В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают.', 'Как можно было поймать такой неудачный момент?!'];
-
-const NAMES = ['Илья',
-  'Артём',
-  'Ирина',
-  'Наталья',
-  'Олег',
-  'Роман',
-  'Анастасия',
-  'Вера',
-  'Борис',
-  'Аркадий',
-  'Галина',
-  'Маргарита',
-  'Николай',
-  'Никита',
-  'Ольга',
-  'Алина',
-  'Арсен',
-  'Виталий',
-  'Юлия'];
-
-
-const uniquePhotoId = getUniqueRandomInteger(1, POSTS_QUANTITY);
-const uniquePhotoUrl = getUniqueRandomInteger(1, POSTS_QUANTITY);
-const uniqueCommentId = getUniqueRandomInteger(1, MAX_COMMENT_ID_QUANTITY);
+const uniquePhotoId = getUniqueRandomInteger(MIN_POSTS_QUANTITY, MAX_POSTS_QUANTITY);
+const uniquePhotoUrl = getUniqueRandomInteger(MIN_POSTS_QUANTITY, MAX_POSTS_QUANTITY);
+const uniqueCommentId = getUniqueRandomInteger(MIN_COMMENT_ID_QUANTITY, MAX_COMMENT_ID_QUANTITY);
 
 const createPhotoPost = () => {
   const randomId = uniquePhotoId();
   const randomUrl = uniquePhotoUrl();
   const randomDescription = getRandomArrayElement(PHOTOS_DESCRIPTIONS);
   const randomLikes = getRandomInteger(MIN_LIKES, MAX_LIKES);
-  const commentQuantity = getRandomInteger(0, MAX_COMMENT_QUANTITY);
+  const commentQuantity = getRandomInteger(MIN_COMMENT_QUANTITY, MAX_COMMENT_QUANTITY);
 
   const createComments = () => {
     const randomCommentId = uniqueCommentId();
-    const commentAvatarUrl = `img/avatar-${getRandomInteger(1, COMMENTATORS_QUANTITY)}.svg`;
+    const commentAvatarUrl = `img/avatar-${getRandomInteger(MIN_COMMENTATORS_QUANTITY, MAX_COMMENTATORS_QUANTITY)}.svg`;
     const commentMessage = `${getRandomArrayElement(COMMENT_MESSAGES)} ${getRandomArrayElement(COMMENT_MESSAGES)}`;
     const commentName = getRandomArrayElement(NAMES);
 
@@ -78,6 +50,6 @@ const createPhotoPost = () => {
 };
 
 
-const pubishPosts = () => Array.from({ length: POSTS_QUANTITY }, createPhotoPost);
+const pubishPosts = () => Array.from({ length: MAX_POSTS_QUANTITY }, createPhotoPost);
 
 export {pubishPosts};
