@@ -1,4 +1,4 @@
-import {getRandomInteger, getUniqueRandomInteger, getRandomArrayElement} from './utils';
+import {getRandomInteger, getUniqueRandomInteger, getRandomArrayElement} from './utils.js';
 import {
   MIN_POSTS_QUANTITY,
   MAX_POSTS_QUANTITY,
@@ -13,7 +13,7 @@ import {
   PHOTOS_DESCRIPTIONS,
   COMMENT_MESSAGES,
   NAMES
-} from './constants';
+} from './constants.js';
 
 const uniquePhotoId = getUniqueRandomInteger(MIN_POSTS_QUANTITY, MAX_POSTS_QUANTITY);
 const uniquePhotoUrl = getUniqueRandomInteger(MIN_POSTS_QUANTITY, MAX_POSTS_QUANTITY);
@@ -50,6 +50,6 @@ const createPhotoPost = () => {
 };
 
 
-const pubishPosts = () => Array.from({ length: MAX_POSTS_QUANTITY }, createPhotoPost);
+const createPosts = () => Array.from({ length: MAX_POSTS_QUANTITY }, createPhotoPost);
 
-export {pubishPosts};
+export {createPosts};

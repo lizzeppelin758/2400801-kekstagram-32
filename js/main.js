@@ -1,4 +1,4 @@
-import {pubishPosts} from './data.js';
+import {createPosts} from './data.js';
+import {generateThumbnails} from './thumbnail.js';
 
-console.log(pubishPosts());
-
+generateThumbnails(createPosts());
