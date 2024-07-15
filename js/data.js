@@ -50,6 +50,6 @@ const createPhotoPost = () => {
 };
 
 
-const pubishPosts = () => Array.from({ length: MAX_POSTS_QUANTITY }, createPhotoPost);
+const createPosts = () => Array.from({ length: MAX_POSTS_QUANTITY }, createPhotoPost);
 
-export {pubishPosts};
+export {createPosts};
