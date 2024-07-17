@@ -2,10 +2,11 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 const pictureContainer = document.querySelector('.pictures');
 
-const createNewPicture = ({url, description, likes, comments}) => {
+const createNewPicture = ({id, url, description, likes, comments}) => {
   const newPicture = pictureTemplate.cloneNode(true);
+  newPicture.id = id;
   const pictureImage = newPicture.querySelector('.picture__img');
-  pictureImage.src = `photos/${url}.jpg`;
+  pictureImage.src = url;
   pictureImage.alt = description;
   newPicture.querySelector('.picture__likes').textContent = likes;
   newPicture.querySelector('.picture__comments').textContent = comments.length;
@@ -21,5 +22,5 @@ const generateThumbnails = (pictures) => {
   pictureContainer.append(pictureFragment);
 };
 
-export {generateThumbnails};
+export {generateThumbnails, pictureContainer};
 

@@ -23,4 +23,6 @@ const getUniqueRandomInteger = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export {getRandomInteger, getUniqueRandomInteger, getRandomArrayElement};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, getUniqueRandomInteger, getRandomArrayElement, isEscapeKey};

@@ -1,4 +1,9 @@
 import {createPosts} from './data.js';
 import {generateThumbnails} from './thumbnail.js';
+import './picture-modal.js';
 
-generateThumbnails(createPosts());
+const currentPictures = createPosts();
+
+generateThumbnails(currentPictures);
+
+export {currentPictures};

@@ -42,7 +42,7 @@ const createPhotoPost = () => {
 
   return {
     id: randomId,
-    url: randomUrl,
+    url: `photos/${randomUrl}.jpg`,
     description: randomDescription,
     likes: randomLikes,
     comments: Array.from({ length: commentQuantity }, createComments),
