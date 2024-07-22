@@ -7,5 +7,4 @@ const currentPictures = createPosts();
 
 generateThumbnails(currentPictures);
 
-export {currentPictures};
 

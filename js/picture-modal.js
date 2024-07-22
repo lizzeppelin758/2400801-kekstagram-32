@@ -1,6 +1,4 @@
 import { isEscapeKey } from './utils.js';
-import { currentPictures } from './main.js';
-
 
 const bigPictureModal = document.querySelector('.big-picture');
 const body = document.querySelector('body');
@@ -12,47 +10,53 @@ const commentShownCount = bigPictureModal.querySelector('.social__comment-shown-
 const commentTotalCount = bigPictureModal.querySelector('.social__comment-total-count');
 const commentsList = bigPictureModal.querySelector('.social__comments');
 
-const loadMoreComments = () => {
-  if (Number(commentShownCount.textContent) < Number(commentTotalCount.textContent)) {
-    loadCommentsButton.addEventListener('click', () => {
-      for(let i = 0; i < 5; i++) {
-        const hiddenComment = commentsList.querySelector('.social__comments .hidden');
-        hiddenComment.classList.remove('hidden');
-        commentShownCount.textContent = Number(commentShownCount.textContent) + 1;
-        if (Number(commentShownCount.textContent) === Number(commentTotalCount.textContent)) {
-          loadCommentsButton.classList.add('hidden');
-        }
-      }
-    });
+const SHOWN_COMMENTS = 5;
 
+const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+
+const localComments = [];
+let renderedCommentsCount = 0;
+let total = 0;
+
+const renderLoader = () => {
+  if (renderedCommentsCount < total) {
+    loadCommentsButton.classList.remove('hidden');
   } else {
     loadCommentsButton.classList.add('hidden');
   }
 };
+const renderStatistic = () => {
+  commentTotalCount.textContent = total;
+  commentShownCount.textContent = renderedCommentsCount;
+};
 
-const fillBigPicture = (bigPicture, {url, likes, comments, description}) => {
-  bigPicture.querySelector('.big-picture__img img').src = url;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.social__comment-total-count').textContent = comments.length;
-  bigPicture.querySelector('.social__comment-shown-count').textContent = comments.length <= 5 ? comments.length : 5;
-  bigPicture.querySelector('.social__caption').textContent = description;
-
-  commentsList.innerHTML = '';
-  const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+const renderComments = () => {
   const commentFragment = document.createDocumentFragment();
-  for (let i = 0; i < comments.length; i++) {
 
+  localComments.splice(0, SHOWN_COMMENTS).forEach((commentElement) => {
     const comment = commentTemplate.cloneNode(true);
-    comment.querySelector('.social__picture').src = comments[i].avatar;
-    comment.querySelector('.social__picture').alt = comments[i].name;
-    comment.querySelector('.social__text').textContent = comments[i].message;
-    if(i >= 5) {
-      comment.classList.add('hidden');
-    }
+    comment.querySelector('.social__picture').src = commentElement.avatar;
+    comment.querySelector('.social__picture').alt = commentElement.name;
+    comment.querySelector('.social__text').textContent = commentElement.message;
     commentFragment.append(comment);
-  }
+    renderedCommentsCount++;
+  });
   commentsList.append(commentFragment);
-  loadMoreComments();
+  renderLoader();
+  renderStatistic();
+};
+
+const fillBigPicture = ({url, likes, comments, description}) => {
+  bigPictureModal.querySelector('.big-picture__img img').src = url;
+  bigPictureModal.querySelector('.likes-count').textContent = likes;
+  bigPictureModal.querySelector('.social__caption').textContent = description;
+
+  localComments.length = 0;
+  localComments.push(...comments.slice());
+  commentsList.innerHTML = '';
+  renderedCommentsCount = 0;
+  total = comments.length;
+  renderComments();
 };
 
 const onDocumentKeydown = (evt) => {
@@ -76,14 +80,11 @@ const closeBigPicture = () => {
 
 closeBigPictureButton.addEventListener('click', closeBigPicture);
 
+loadCommentsButton.addEventListener('click', renderComments);
 
-document.addEventListener('click', (evt) => {
-  if(evt.target.closest('.picture')) {
-    openBigPicture();
-    const currentId = Number(evt.target.closest('.picture').id);
-    const currentPicture = currentPictures.find(({id}) => id === currentId);
-    fillBigPicture(bigPictureModal, currentPicture);
-  }
-});
+const showModal = (photo) => {
+  openBigPicture();
+  fillBigPicture(photo);
+};
 
-
+export {showModal};
