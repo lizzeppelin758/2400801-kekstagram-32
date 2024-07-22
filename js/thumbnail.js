@@ -23,4 +23,3 @@ const generateThumbnails = (pictures) => {
 };
 
 export {generateThumbnails, pictureContainer};
-
