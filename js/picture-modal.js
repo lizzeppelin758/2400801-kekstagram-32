@@ -82,9 +82,9 @@ closeBigPictureButton.addEventListener('click', closeBigPicture);
 
 loadCommentsButton.addEventListener('click', renderComments);
 
-const showModal = (photo) => {
+const showBigPicture = (photo) => {
   openBigPicture();
   fillBigPicture(photo);
 };
 
-export {showModal};
+export {showBigPicture};

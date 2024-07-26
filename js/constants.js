@@ -50,41 +50,68 @@ const NAMES = [
   'Юлия'
 ];
 
-const EFFECT_PARAMETERS = {
-  chrome: {
+const effect = {
+  DEFAULT: 'none',
+  CHROME: 'chrome',
+  SEPIA: 'sepia',
+  MARVIN: 'marvin',
+  PHOBOS: 'phobos',
+  HEAT: 'heat',
+};
+
+const effectToFilter = {
+  [effect.CHROME]: {
     filter: 'grayscale',
-    min: 0,
-    max: 1,
-    step: 0.1,
     unit: ''
   },
-  sepia: {
+  [effect.SEPIA]: {
     filter: 'sepia',
-    min: 0,
-    max: 1,
-    step: 0.1,
     unit: ''
   },
-  marvin: {
+  [effect.MARVIN]: {
     filter: 'invert',
+    unit: '%'
+  },
+  [effect.PHOBOS]: {
+    filter: 'blur',
+    unit: 'px'
+  },
+  [effect.HEAT]: {
+    filter: 'brightness',
+    unit: ''
+  }
+};
+
+const effectToSliderOption = {
+  [effect.DEFAULT]: {
     min: 0,
     max: 100,
     step: 1,
-    unit: '%'
   },
-  phobos: {
-    filter: 'blur',
+  [effect.CHROME]: {
+    min: 0,
+    max: 1,
+    step: 0.1,
+  },
+  [effect.SEPIA]: {
+    min: 0,
+    max: 1,
+    step: 0.1,
+  },
+  [effect.MARVIN]: {
+    min: 0,
+    max: 100,
+    step: 1,
+  },
+  [effect.PHOBOS]: {
     min: 0,
     max: 3,
     step: 0.1,
-    unit: 'px'
   },
-  heat: {
-    filter: 'brightness',
+  [effect.HEAT]: {
     min: 1,
     max: 3,
     step: 0.1,
-    unit: ''
   }
 };
 
@@ -102,5 +129,7 @@ export {
   PHOTOS_DESCRIPTIONS,
   COMMENT_MESSAGES,
   NAMES,
-  EFFECT_PARAMETERS
+  effect,
+  effectToFilter,
+  effectToSliderOption
 };
