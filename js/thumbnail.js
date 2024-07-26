@@ -1,4 +1,4 @@
-import { showModal } from './picture-modal.js';
+import { showBigPicture } from './picture-modal.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -32,7 +32,7 @@ pictureContainer.addEventListener('click', (evt) => {
   if(evt.target.closest('.picture')) {
     const currentId = Number(evt.target.closest('.picture').dataset.id);
     const currentPicture = localPictures.find(({id}) => id === currentId);
-    showModal(currentPicture);
+    showBigPicture(currentPicture);
   }
 });
 

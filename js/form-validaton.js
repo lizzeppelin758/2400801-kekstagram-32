@@ -1,5 +1,3 @@
-
-
 const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_QUANTITY = 5;
