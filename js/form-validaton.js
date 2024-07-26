@@ -1,10 +1,11 @@
-import { imgUploadForm } from './form-modal.js';
-import { onDocumentKeydown } from './form-modal.js';
+
 
 const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_QUANTITY = 5;
 const MAX_DESCRIPTION_LENGTH = 140;
+
+const imgUploadForm = document.querySelector('.img-upload__form');
 
 const hashtagInput = imgUploadForm.querySelector('.text__hashtags');
 const descriptionInput = imgUploadForm.querySelector('.text__description');
@@ -34,7 +35,7 @@ const checkMaxLength = (input) => {
 
 const createMaxLengthMessage = () => `Не более ${MAX_HASHTAG_LENGTH} симоволов для одного хештега`;
 
-pristine.addValidator(hashtagInput, () => checkMinLength(hashtagInput), createMinLengthMessage, 2);
+pristine.addValidator(hashtagInput, () => checkMinLength(hashtagInput), createMinLengthMessage, 2, true);
 
 pristine.addValidator(hashtagInput, () => checkMaxLength(hashtagInput), createMaxLengthMessage, 2);
 
@@ -43,7 +44,7 @@ const checkSymbols = (hashtagText) => {
   return normalizedHashtag.every((hashtag) => etalonHashtag.test(hashtag));
 };
 
-pristine.addValidator(hashtagInput, () => checkSymbols(hashtagInput), 'Хештег начинается с # и содержит только буквы и цифры', 1);
+pristine.addValidator(hashtagInput, () => checkSymbols(hashtagInput), 'Хештег начинается с # и содержит только буквы и цифры', 1, true);
 
 const checkQuantity = (input) => {
   const normalizedHashtag = normalizeText(input);
@@ -52,7 +53,7 @@ const checkQuantity = (input) => {
 
 const createMaxQuantityMessage = () => `Можно ввести не более ${MAX_HASHTAG_QUANTITY} хештегов`;
 
-pristine.addValidator(hashtagInput, () => checkQuantity(hashtagInput), createMaxQuantityMessage, 1);
+pristine.addValidator(hashtagInput, () => checkQuantity(hashtagInput), createMaxQuantityMessage, 1, true);
 
 const checkReplay = (input) => {
   const normalizedHashtag = normalizeText(input);
@@ -60,7 +61,7 @@ const checkReplay = (input) => {
   return normalizedHashtag.length === uniques.length;
 };
 
-pristine.addValidator(hashtagInput, () => checkReplay(hashtagInput), 'Хэштеги не должны повторяться', 1);
+pristine.addValidator(hashtagInput, () => checkReplay(hashtagInput), 'Хэштеги не должны повторяться', 1, true);
 
 const checkDescriptionLength = (input) => input.value.length <= MAX_DESCRIPTION_LENGTH;
 
@@ -68,32 +69,12 @@ const createMaxLengthDescriptionMessage = () => `Длина описания н�
 
 pristine.addValidator(descriptionInput, () => checkDescriptionLength(descriptionInput), createMaxLengthDescriptionMessage);
 
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const resetValidation = () => {
+  pristine.reset();
+};
 
-hashtagInput.addEventListener('focus', () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
-});
-hashtagInput.addEventListener('blur', () => {
-  document.addEventListener('keydown', onDocumentKeydown);
-});
+const checkValid = () => pristine.validate();
 
-descriptionInput.addEventListener('focus', () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
-});
-descriptionInput.addEventListener('blur', () => {
-  document.addEventListener('keydown', onDocumentKeydown);
-});
+export {resetValidation, checkValid};
 
-
-// imgUploadForm.addEventListener('click', () => {
-//   if(imgUploadForm.querySelector('.text__hashtags') === document.activeElement || imgUploadForm.querySelector('.text__description') === document.activeElement) {
-//     document.removeEventListener('keydown', onDocumentKeydown);
-//   } else {
-//     document.addEventListener('keydown', onDocumentKeydown);
-//   }
-// });
-
-
+// сделать прерывание показа ошибок в полях и установить приоритеты.

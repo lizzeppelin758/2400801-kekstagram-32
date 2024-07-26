@@ -50,6 +50,44 @@ const NAMES = [
   'Юлия'
 ];
 
+const EFFECT_PARAMETERS = {
+  chrome: {
+    filter: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  sepia: {
+    filter: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  marvin: {
+    filter: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%'
+  },
+  phobos: {
+    filter: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px'
+  },
+  heat: {
+    filter: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: ''
+  }
+};
+
 export {
   MIN_POSTS_QUANTITY,
   MAX_POSTS_QUANTITY,
@@ -63,5 +101,6 @@ export {
   MAX_COMMENT_ID_QUANTITY,
   PHOTOS_DESCRIPTIONS,
   COMMENT_MESSAGES,
-  NAMES
+  NAMES,
+  EFFECT_PARAMETERS
 };

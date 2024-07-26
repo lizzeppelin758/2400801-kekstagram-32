@@ -1,30 +1,41 @@
 import { isEscapeKey } from './utils.js';
+import { checkValid, resetValidation } from './form-validaton.js';
+import { resetScaleValue } from './scale-picture.js';
 
-const imgUploadInput = document.querySelector('.img-upload__input');
-export const imgUploadForm = document.querySelector('.img-upload__overlay');
-const formCancelButton = document.querySelector('.img-upload__cancel');
+const imgUploadForm = document.querySelector('.img-upload__form');
+const imgUploadInput = imgUploadForm.querySelector('.img-upload__input');
+const imgUploadContainer = imgUploadForm.querySelector('.img-upload__overlay');
+const formCancelButton = imgUploadForm.querySelector('.img-upload__cancel');
 const body = document.querySelector('body');
 
 const onDocumentKeydown = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
-    imgUploadForm.classList.add('hidden');
+    if(!(imgUploadForm.querySelector('.text__hashtags') === document.activeElement) && !(imgUploadForm.querySelector('.text__description') === document.activeElement)) {
+      imgUploadForm.classList.add('hidden');
+    }
   }
 };
 
 const openForm = () => {
-  imgUploadForm.classList.remove('hidden');
+  imgUploadContainer.classList.remove('hidden');
   body.classList.add('.modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const closeForm = () => {
   imgUploadInput.value = '';
-  imgUploadForm.classList.add('hidden');
+  imgUploadContainer.classList.add('hidden');
   body.classList.remove('.modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-
+  resetValidation();
+  resetScaleValue();
 };
+
+imgUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  checkValid();
+});
 
 imgUploadInput.addEventListener('change', openForm);
 
