@@ -73,6 +73,11 @@ const resetValidation = () => {
 
 const checkValid = () => pristine.validate();
 
-export {resetValidation, checkValid};
+const resetFields = () => {
+  hashtagInput.value = '';
+  descriptionInput.value = '';
+};
+
+export {resetValidation, checkValid, resetFields};
 
 // сделать прерывание показа ошибок в полях и установить приоритеты.
