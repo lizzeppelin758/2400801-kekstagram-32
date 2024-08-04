@@ -2,7 +2,7 @@ import { isEscapeKey } from './utils.js';
 import { checkValid, resetValidation, resetFields } from './form-validaton.js';
 import { resetScaleValue } from './scale-picture.js';
 import { initSlider, resetSlider } from './add-filter.js';
-import { showLoadError, showLoadSuccess } from './alert-handling.js';
+import { showLoadError, showLoadSuccess} from './alert-handling.js';
 import { sendForm } from './connect-server.js';
 
 
@@ -23,16 +23,23 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const deleteEscapeFormHandler = () => {
+  document.removeEventListener('keydown', onDocumentKeydown);
+};
+const setEscapeFormHandler = () => {
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
 const openForm = () => {
   imgUploadContainer.classList.remove('hidden');
-  body.classList.add('.modal-open');
+  body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const closeForm = () => {
   imgUploadInput.value = '';
   imgUploadContainer.classList.add('hidden');
-  body.classList.remove('.modal-open');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   resetValidation();
   resetScaleValue();
@@ -40,13 +47,14 @@ const closeForm = () => {
   resetFields();
 };
 
-const blockSubmitButton = () => {
-  formSubmitButton.disabled = true;
-  formSubmitButton.textContent = 'Отправляю...';
-};
-const unblockSubmitButton = () => {
-  formSubmitButton.disabled = false;
-  formSubmitButton.textContent = 'Опубликовать';
+const changeSubmitButton = (isSent) => {
+  if (isSent) {
+    formSubmitButton.disabled = false;
+    formSubmitButton.textContent = 'Опубликовать';
+  } else {
+    formSubmitButton.disabled = true;
+    formSubmitButton.textContent = 'Отправляю...';
+  }
 };
 
 const successLoadForm = () => {
@@ -54,23 +62,24 @@ const successLoadForm = () => {
   showLoadSuccess();
 };
 
-
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (checkValid()) {
-    blockSubmitButton();
+    let process = false;
+    changeSubmitButton(process);
     const formData = new FormData(evt.target);
     sendForm(() => {
+      process = true;
       successLoadForm();
-      unblockSubmitButton();
+      changeSubmitButton(process);
     },
     () => {
-      showLoadError();
-      unblockSubmitButton();
+      process = true;
+      showLoadError(deleteEscapeFormHandler, setEscapeFormHandler);
+      changeSubmitButton(process);
     }, formData);
   }
 });
-
 
 imgUploadInput.addEventListener('change', openForm);
 
@@ -78,7 +87,6 @@ formCancelButton.addEventListener('click', closeForm);
 
 initSlider();
 
-
-//сделать так, чтобы форма отправлялась, когда хэштег был введён и стерт, либо поле хэштега было в фокусе и фокус был снят
-
 //убрать слушатель esc с формы, когда открываются сообщения
+
+// удалять слушатель когда убирается сообщение об ошибке

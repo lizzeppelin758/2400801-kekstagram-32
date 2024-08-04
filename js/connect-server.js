@@ -18,12 +18,18 @@ const getData = () => {
 
 const sendForm = (onSucces, onError, data) => {
   fetch(
-    'https://32.javascript.htmlacademy.pro/kekstagram',
+    'https://32.javascript.htmlacadem.pro/kekstagram',
     {
       method: 'POST',
       body: data,
     },
-  ).then(() => onSucces())
+  ).then((response) => {
+    if (response.ok) {
+      onSucces();
+    } else {
+      throw new Error();
+    }
+  })
     .catch(() => {
       onError();
     });
