@@ -17,7 +17,7 @@ const createNewPicture = ({id, url, description, likes, comments}) => {
   return newPicture;
 };
 
-const generateThumbnails = (pictures) => {
+const renderThumbnails = (pictures) => {
   localPictures.length = 0;
   localPictures.push(...pictures.slice());
   const pictureFragment = document.createDocumentFragment();
@@ -36,5 +36,5 @@ pictureContainer.addEventListener('click', (evt) => {
   }
 });
 
-export {generateThumbnails};
+export {renderThumbnails};
 
