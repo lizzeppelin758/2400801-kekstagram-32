@@ -1,18 +1,12 @@
-import { showDataError } from './alert-handling.js';
-import { renderThumbnails } from './thumbnail.js';
-import { showFilters } from './filters.js';
-
-const getData = () => {
+const getData = (onSuccess, onError) => {
   fetch('https://32.javascript.htmlacademy.pro/kekstagram/data')
     .then((response) => response.json())
     .then((pictures) => {
-      renderThumbnails(pictures);
+      onSuccess(pictures);
     })
-    .then(() => {
-      showFilters();
-    })
+
     .catch(() => {
-      showDataError();
+      onError();
     });
 };
 
