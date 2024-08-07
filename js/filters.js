@@ -1,5 +1,5 @@
 import { renderThumbnails } from './thumbnail.js';
-import { getRandomArrayElement /*, debounce */} from './utils.js';
+import { getRandomArrayElement, debounce} from './utils.js';
 
 const filters = document.querySelector('.img-filters');
 const RANDOM_LENGTH = 10;
@@ -42,19 +42,22 @@ const Sorting = {
 };
 
 const showSorting = (pictures, button) => {
-  setActiveButton(button);
+
   renderThumbnails(Sorting[button.id](pictures));
-  /*
- debounce(() => renderThumbnails(Sorting[button.id](pictures)), 500);
- */
 };
 
 const setFilterClick = (pictures) => {
-  filters.addEventListener('click', (evt) => {
+  filters.addEventListener('click', debounce((evt) => {
     if (evt.target.classList.contains('img-filters__button')) {
       showSorting(pictures, evt.target);
     }
-  });
+  }));
 };
+
+filters.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('img-filters__button')) {
+    setActiveButton(evt.target);
+  }
+});
 
 export {showFilters, setFilterClick};

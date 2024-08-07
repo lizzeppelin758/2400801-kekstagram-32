@@ -17,12 +17,10 @@ const onEscapeKeydownForm = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     if(!(imgUploadForm.querySelector('.text__hashtags') === document.activeElement) && !(imgUploadForm.querySelector('.text__description') === document.activeElement)) {
-      imgUploadContainer.classList.add('hidden');
-      imgUploadInput.value = '';
-      body.classList.remove('modal-open');
+      closeForm();
     }
+    document.removeEventListener('keydown', onEscapeKeydownForm);
   }
-  document.removeEventListener('keydown', onEscapeKeydownForm);
 };
 
 const deleteEscapeFormHandler = () => {
@@ -38,7 +36,7 @@ const openForm = () => {
   setEscapeFormHandler();
 };
 
-const closeForm = () => {
+function closeForm () {
   imgUploadInput.value = '';
   imgUploadContainer.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -47,7 +45,7 @@ const closeForm = () => {
   resetScaleValue();
   resetSlider();
   resetFields();
-};
+}
 
 const changeSubmitButton = (isSent) => {
   if (isSent) {
