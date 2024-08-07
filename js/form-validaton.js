@@ -17,7 +17,8 @@ const pristine = new Pristine(imgUploadForm, {
 const etalonHashtag = /^#[a-zа-яё0-9]+$/i;
 const space = /\s+/g;
 
-const normalizeText = (input) => !input.length ? [] : input.value.toLowerCase().replaceAll(space, ' ').trim().split(' ');
+const normalizeText = (input) => !input.value.length ? [] : input.value.toLowerCase().replaceAll(space, ' ').trim().split(' ');
+
 
 const checkMinLength = (input) => {
   const normalizedHashtag = normalizeText(input);
@@ -70,6 +71,8 @@ pristine.addValidator(descriptionInput, () => checkDescriptionLength(description
 const resetValidation = () => {
   pristine.reset();
 };
+
+pristine.validate();
 
 const checkValid = () => pristine.validate();
 

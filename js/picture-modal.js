@@ -63,18 +63,19 @@ const onDocumentKeydown = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     bigPictureModal.classList.add('hidden');
+    body.classList.remove('modal-open');
   }
 };
 
 const openBigPicture = () => {
   bigPictureModal.classList.remove('hidden');
-  body.classList.add('.modal-open');
+  body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const closeBigPicture = () => {
   bigPictureModal.classList.add('hidden');
-  body.classList.remove('.modal-open');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 

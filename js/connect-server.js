@@ -1,24 +1,23 @@
-import { showDataError } from './alert-handling.js';
-import { renderThumbnails } from './thumbnail.js';
-import { showFilters } from './filters.js';
+const BASE_URL = 'https://32.javascript.htmlacademy.pro/kekstagram';
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
 
-const getData = () => {
-  fetch('https://32.javascript.htmlacademy.pro/kekstagram/data')
+const getData = (onSuccess, onError) => {
+  fetch(`${BASE_URL}${Route.GET_DATA}`)
     .then((response) => response.json())
     .then((pictures) => {
-      renderThumbnails(pictures);
-    })
-    .then(() => {
-      showFilters();
+      onSuccess(pictures);
     })
     .catch(() => {
-      showDataError();
+      onError();
     });
 };
 
 const sendForm = (onSucces, onError, data) => {
   fetch(
-    'https://32.javascript.htmlacadem.pro/kekstagram',
+    `${BASE_URL}${Route.SEND_DATA}`,
     {
       method: 'POST',
       body: data,
@@ -34,6 +33,5 @@ const sendForm = (onSucces, onError, data) => {
       onError();
     });
 };
-
 
 export {getData, sendForm};

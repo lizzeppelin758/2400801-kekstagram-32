@@ -9,7 +9,6 @@ const SCALE_MAX = 100;
 const SCALE_MIN = 25;
 const SCALE_START_VALUE = 100;
 
-
 smallerButton.addEventListener('click', () => {
   if (scaleNumber > SCALE_MIN) {
     scaleInput.value = `${scaleNumber - SCALE_STEP}%`;
@@ -33,6 +32,7 @@ scaleInput.addEventListener('change', () => {
 const resetScaleValue = () => {
   scaleInput.value = `${SCALE_START_VALUE}%`;
   scalingPicture.style.transform = `scale(${ SCALE_START_VALUE * 0.01})`;
+  scaleNumber = SCALE_START_VALUE;
 };
 
 export {resetScaleValue};
