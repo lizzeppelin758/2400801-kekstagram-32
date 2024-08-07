@@ -13,34 +13,36 @@ const formCancelButton = imgUploadForm.querySelector('.img-upload__cancel');
 const formSubmitButton = imgUploadForm.querySelector('.img-upload__submit');
 const body = document.querySelector('body');
 
-const onDocumentKeydown = (evt) => {
+const onEscapeKeydownForm = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     if(!(imgUploadForm.querySelector('.text__hashtags') === document.activeElement) && !(imgUploadForm.querySelector('.text__description') === document.activeElement)) {
       imgUploadContainer.classList.add('hidden');
       imgUploadInput.value = '';
+      body.classList.remove('modal-open');
     }
   }
+  document.removeEventListener('keydown', onEscapeKeydownForm);
 };
 
 const deleteEscapeFormHandler = () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onEscapeKeydownForm);
 };
 const setEscapeFormHandler = () => {
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onEscapeKeydownForm);
 };
 
 const openForm = () => {
   imgUploadContainer.classList.remove('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
+  setEscapeFormHandler();
 };
 
 const closeForm = () => {
   imgUploadInput.value = '';
   imgUploadContainer.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
+  deleteEscapeFormHandler();
   resetValidation();
   resetScaleValue();
   resetSlider();
@@ -64,6 +66,7 @@ const successLoadForm = () => {
 
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
+  checkValid();
   if (checkValid()) {
     let process = false;
     changeSubmitButton(process);
@@ -75,7 +78,7 @@ imgUploadForm.addEventListener('submit', (evt) => {
     },
     () => {
       process = true;
-      showLoadError(deleteEscapeFormHandler, setEscapeFormHandler);
+      showLoadError();
       changeSubmitButton(process);
     }, formData);
   }
@@ -87,6 +90,4 @@ formCancelButton.addEventListener('click', closeForm);
 
 initSlider();
 
-//убрать слушатель esc с формы, когда открываются сообщения
-
-// удалять слушатель когда убирается сообщение об ошибке
+export {onEscapeKeydownForm};

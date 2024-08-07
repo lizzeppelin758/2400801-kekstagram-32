@@ -17,9 +17,14 @@ const createNewPicture = ({id, url, description, likes, comments}) => {
   return newPicture;
 };
 
+const resetPictures = () => {
+  pictureContainer.querySelectorAll('.picture').forEach((picture) => picture.remove());
+};
+
 const renderThumbnails = (pictures) => {
   localPictures.length = 0;
   localPictures.push(...pictures.slice());
+  resetPictures();
   const pictureFragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const thumbnail = createNewPicture(picture);
